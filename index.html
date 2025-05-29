@@ -2,32 +2,53 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portofolio Saya</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Rizqi</title>
   <style>
+    :root {
+      --bg-color: #0f111a;
+      --card-color: #1a1d2b;
+      --text-color: #ffffff;
+      --accent-color: #007bff;
+      --section-color: #2a2d3f;
+      --switch-bg: #ccc;
+      --switch-knob: white;
+    }
+
+    body.light {
+      --bg-color: #f9f9f9;
+      --card-color: #ffffff;
+      --text-color: #000000;
+      --accent-color: #007bff;
+      --section-color: #e0e0e0;
+      --switch-bg: #444;
+      --switch-knob: #fff;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #0f111a;
-      color: white;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 2rem;
+      padding: 4rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .container {
       display: flex;
-      background-color: #1a1d2b;
-      border-radius: 20px;
+      background-color: var(--card-color);
+      border-radius: 30px;
       padding: 2rem;
-      box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
-      animation: slideUp 1s ease-out;
+      box-shadow: 0 0 30px rgba(0, 123, 255, 0.4);
       flex-wrap: wrap;
-      width: 1280px;
-      height: 720px;
+      max-width: 1280px;
+      width: 100%;
+      animation: slideUp 1s ease-out;
+      position: relative;
     }
 
     .profile {
@@ -36,7 +57,7 @@
       align-items: center;
       width: 250px;
       margin-right: 2rem;
-      background-color: #2a2d3f;
+      background-color: var(--section-color);
       border-radius: 15px;
       padding: 1rem;
     }
@@ -46,7 +67,7 @@
       height: 160px;
       border-radius: 12px;
       object-fit: cover;
-      border: 3px solid #007bff;
+      border: 3px solid var(--accent-color);
       margin-bottom: 0.5rem;
     }
 
@@ -57,7 +78,7 @@
 
     .profile hr {
       width: 100%;
-      border: 1px solid #007bff;
+      border: 1px solid var(--accent-color);
       margin: 0.5rem 0;
     }
 
@@ -84,13 +105,21 @@
     }
 
     .highlight {
-      color: #007bff;
+      color: var(--accent-color);
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .links a {
-      margin-right: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #007bff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      background-color: var(--accent-color);
       border-radius: 10px;
       text-decoration: none;
       color: white;
@@ -101,58 +130,101 @@
       background-color: #0056b3;
     }
 
+    .links img {
+      width: 20px;
+      height: 20px;
+      filter: grayscale(100%) brightness(0);
+    }
+
     .section {
       padding: 1rem;
-      background-color: #2a2d3f;
+      background-color: var(--section-color);
       border-radius: 15px;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in {
-      animation: fadeIn 1.5s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .about-text {
       text-align: justify;
     }
 
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 800px) {
+      body {
+        padding: 2rem;
+      }
       .container {
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        height: auto;
       }
-
       .profile {
         margin-right: 0;
         margin-bottom: 2rem;
       }
     }
+
+    .toggle-container {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background-color: var(--switch-bg);
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--switch-knob);
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
   </style>
 </head>
 <body>
+  <div class="toggle-container">
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
   <div class="container">
     <div class="profile">
       <img src="https://i.imgur.com/ZcXHBVJ.jpeg" alt="Foto Profil">
@@ -178,12 +250,12 @@
     </div>
 
     <div class="info">
-      <div class="section fade-in">
+      <div class="section">
         <h1>Halo, Saya <span class="highlight">Rizqi Akbar Hernawan</span></h1>
         <p class="about-text">Saya adalah mahasiswa Teknik Komputer yang memiliki ketertarikan besar pada bidang robotika, pengembangan web, dan sistem kontrol. Saya senang membangun solusi teknologi praktis yang bermanfaat untuk masyarakat dan senang mengeksplorasi berbagai teknologi baru. Saya percaya bahwa pembelajaran tidak pernah berhenti, dan saya selalu terbuka untuk tantangan baru di dunia teknologi.</p>
       </div>
 
-      <div class="section fade-in">
+      <div class="section">
         <h2 class="highlight">Keahlian dan Kompetensi</h2>
         <ul>
           <li>Penguasaan HTML, CSS, dan PHP untuk membuat website dinamis</li>
@@ -196,7 +268,7 @@
         </ul>
       </div>
 
-      <div class="section fade-in">
+      <div class="section">
         <h2 class="highlight">Proyek yang Pernah Dibuat</h2>
         <ul>
           <li>Robot Wall Follower menggunakan ESP32 dan 3 sensor ultrasonik</li>
@@ -207,11 +279,25 @@
         </ul>
       </div>
 
-      <div class="section links fade-in">
-        <a href="https://wa.me/62895366217857" target="_blank">WhatsApp</a>
-        <a href="https://www.instagram.com/rizqiakbarh/" target="_blank">Instagram</a>
+      <div class="section links">
+        <a href="mailto:rizqiakbar82@gmail.com" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/128/4338/4338894.png" alt="Gmail">
+        </a>
+        <a href="https://wa.me/62895366217857" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/128/1384/1384023.png" alt="WhatsApp">
+        </a>
+        <a href="https://www.instagram.com/rizqiakbarh/" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/128/1077/1077042.png" alt="Instagram">
+        </a>
       </div>
     </div>
   </div>
+
+  <script>
+    const toggle = document.getElementById('modeToggle');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('light');
+    });
+  </script>
 </body>
 </html>
